@@ -69,6 +69,49 @@
       </div>
     </div>
   </div>
+   <script src="Build/DungeonGames.Shooter vk build.loader.js"></script>
+  <script>
+    const maxPixelRatioMobile = 2.0;
+    const maxPixelRatioDesktop = 1.5;
+
+    var isIOSDevice = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    var isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    var maxDevicePixelRatio = isMobileDevice? maxPixelRatioMobile: maxPixelRatioDesktop;
+    var pixelRatio = Math.min(window.devicePixelRatio, maxDevicePixelRatio);
+
+    var buildUrl = "Build";
+    var loaderUrl = buildUrl + "/DungeonGames.Shooter vk build.loader.js";
+    var config = {
+      dataUrl: buildUrl + "/085159d88d52bc02a457d8de5d3c5372.data.unityweb",
+      frameworkUrl: buildUrl + "/c4c10ef137aad2a23b770d6e3cd8bdb0.js.unityweb",
+      codeUrl: buildUrl + "/5d12122448b54784ac782755c85e38e9.wasm.unityweb",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "DungeonGames",
+      productName: "Shooter",
+      productVersion: "0.2",
+      devicePixelRatio: pixelRatio
+    };
+
+    var canvas = document.querySelector("#unity-canvas");
+    var dungeonLogo = document.querySelector("#dungeon-logo");
+    var loadingBar = document.querySelector("#unity-loading-bar");
+    var progressBar = document.querySelector("#unity-progress-bar");
+
+    var myGameInstance = null;
+    var script = document.createElement("script");
+    script.src = loaderUrl;
+    script.onload = function() {
+      createUnityInstance(canvas, config, function(progress) {
+        progressBar.style.width = 100 * progress + "%";
+      }).then(function(unityInstance) {
+        myGameInstance = unityInstance;
+        dungeonLogo.style.display = "none";
+      }).catch(function(message) {
+        alert(message);
+      });
+    };
+    document.body.appendChild(script);
+  </script>
   <script>
     const library = {
       $vkSDK: {
@@ -257,49 +300,6 @@
 
     autoAddDeps(library, '$vkSDK');
     mergeInto(LibraryManager.library, library);
-  </script>
-  <script src="Build/DungeonGames.Shooter vk build.loader.js"></script>
-  <script>
-    const maxPixelRatioMobile = 2.0;
-    const maxPixelRatioDesktop = 1.5;
-
-    var isIOSDevice = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-    var isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    var maxDevicePixelRatio = isMobileDevice? maxPixelRatioMobile: maxPixelRatioDesktop;
-    var pixelRatio = Math.min(window.devicePixelRatio, maxDevicePixelRatio);
-
-    var buildUrl = "Build";
-    var loaderUrl = buildUrl + "/DungeonGames.Shooter vk build.loader.js";
-    var config = {
-      dataUrl: buildUrl + "/0cb2b9cf38ba4042cf3cd0cf7af96112.data.unityweb",
-      frameworkUrl: buildUrl + "/c4c10ef137aad2a23b770d6e3cd8bdb0.js.unityweb",
-      codeUrl: buildUrl + "/5d12122448b54784ac782755c85e38e9.wasm.unityweb",
-      streamingAssetsUrl: "StreamingAssets",
-      companyName: "DungeonGames",
-      productName: "Shooter",
-      productVersion: "0.2",
-      devicePixelRatio: pixelRatio
-    };
-
-    var canvas = document.querySelector("#unity-canvas");
-    var dungeonLogo = document.querySelector("#dungeon-logo");
-    var loadingBar = document.querySelector("#unity-loading-bar");
-    var progressBar = document.querySelector("#unity-progress-bar");
-
-    var myGameInstance = null;
-    var script = document.createElement("script");
-    script.src = loaderUrl;
-    script.onload = function() {
-      createUnityInstance(canvas, config, function(progress) {
-        progressBar.style.width = 100 * progress + "%";
-      }).then(function(unityInstance) {
-        myGameInstance = unityInstance;
-        dungeonLogo.style.display = "none";
-      }).catch(function(message) {
-        alert(message);
-      });
-    };
-    document.body.appendChild(script);
   </script>
 </body>
 
